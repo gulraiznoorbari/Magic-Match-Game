@@ -3,12 +3,12 @@ import "./App.css";
 import Card from "./Card";
 
 const cardImages = [
-    { src: "/images/helmet-1.png" },
-    { src: "/images/potion-1.png" },
-    { src: "/images/ring-1.png" },
-    { src: "/images/scroll-1.png" },
-    { src: "/images/shield-1.png" },
-    { src: "/images/sword-1.png" },
+    { src: "/images/helmet-1.png", matched: false },
+    { src: "/images/potion-1.png", matched: false },
+    { src: "/images/ring-1.png", matched: false },
+    { src: "/images/scroll-1.png", matched: false },
+    { src: "/images/shield-1.png", matched: false },
+    { src: "/images/sword-1.png", matched: false },
 ];
 
 const App = () => {
@@ -41,11 +41,15 @@ const App = () => {
 
     // comparing choices:
     useEffect(() => {
-        choiceOne && choiceTwo
-            ? choiceOne.src === choiceTwo.src
-                ? console.log("Cards Matched 🎉") && resetTurn()
-                : console.log("Cards don't match 😢")
-            : resetTurn();
+        if (choiceOne && choiceTwo) {
+            choiceOne.src === choiceTwo.src
+                ? setCards((prevCards) =>
+                      prevCards.map((card) =>
+                          card.src === choiceOne.src ? { ...card, matched: true } : card,
+                      ),
+                  ) && resetTurn()
+                : resetTurn();
+        }
     }, [choiceOne, choiceTwo]);
 
     return (
