@@ -52,13 +52,16 @@ const App = () => {
     useEffect(() => {
         if (choiceOne && choiceTwo) {
             setDisabled(true);
-            choiceOne.src === choiceTwo.src
-                ? setCards((prevCards) =>
-                      prevCards.map((card) =>
-                          card.src === choiceOne.src ? { ...card, matched: true } : card,
-                      ),
-                  ) && resetTurn()
-                : setTimeout(() => resetTurn(), 1000);
+            if (choiceOne.src === choiceTwo.src) {
+                setCards((prevCards) =>
+                    prevCards.map((card) =>
+                        card.src === choiceOne.src ? { ...card, matched: true } : card,
+                    ),
+                );
+                resetTurn();
+            } else {
+                setTimeout(() => resetTurn(), 1000);
+            }
         }
     }, [choiceOne, choiceTwo]);
 
